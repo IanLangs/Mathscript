@@ -1,0 +1,27 @@
+{
+  "name": "mathscript",
+  "version": "1.0.0",
+  "description": "ts/js superset",
+  "main": "src/main.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IanLangs/Mathscript.git"
+  },
+  "keywords": [
+    "msc",
+    "ms",
+    "mathscript"
+  ],
+  "author": "IanLangs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IanLangs/Mathscript/issues"
+  },
+  "dependencies": {
+    "typescript": "^5.9.3"
+  }
+}
