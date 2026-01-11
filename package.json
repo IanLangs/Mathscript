@@ -1,11 +1,11 @@
 {
-  "name": "mathscript",
-  "version": "1.0.0",
+  "name": "@iancarlos/mathscript",
+  "version": "1.0.1",
   "description": "ts/js superset",
-  "main": "src/main.js",
+  "main": "src/transpile.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"usa msc --init\"; exit 0"
   },
   "repository": {
     "type": "git",
@@ -17,11 +17,14 @@
     "mathscript"
   ],
   "author": "IanLangs",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/IanLangs/Mathscript/issues"
   },
   "dependencies": {
     "typescript": "^5.9.3"
+  },
+  "bin":{
+    "msc":"src/main.js"
   }
 }

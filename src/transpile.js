@@ -21,9 +21,11 @@ const constants = [
     regex(/using\((.*?)\)/g, "requiere($1)"),
     regex(/\bstr\b/g, "string"),
     regex(/\bbool\b/g, "boolean"),
+    regex(/\bmap\s*<([^,]*),\s*([^,]*)>\b/g, "Record<$1, $2>"),
+    regex(/\bmap\b/g, "Record<any, any>"),
     regex(/\bobj\b/g, "object"),
-    regex(/\barr\b/g, "Array"),
-    regex(/\bfunction\b/g, "Function"),
+    regex(/\barr<(.*?)>\b/g, "$1[]"),
+    regex(/\barr\b/g, "any[]"),
     regex(/\bfn\b/g, "function")
 ]
 
