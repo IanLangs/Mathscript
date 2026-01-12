@@ -46,10 +46,8 @@ async function main() {
 
     for (const file of files) {
         const outjs = file.replace(/\.ms$/, ".js")
-        const outts = file.replace(/\.ms$/, ".ts")
         let code = fs.readFileSync(file, 'utf-8')
         code = MS.ms2ts(code)
-        fs.writeFileSync(outts, code, 'utf-8')
         code = MS.ts2js(code, strict)
         fs.writeFileSync(outjs, code, 'utf-8')
         console.log(`Transpilado ${file} → ${outjs}`)
