@@ -30,15 +30,15 @@ const constants = [
 ]
 
 function ms2ts(code) {
-    let result = code;
+    let result = code
     for (const r of constants) {
-        result = r.replace(result);
+        result = r.replace(result)
     }
-    return result;
+    return result
 }
 function ts2js(code, types) {
     if (types) {
-        return ts.transpile(code, { target: ts.ScriptTarget.ES2020, module: ts.ModuleKind.ESNext });
+        return ts.transpile(code, { target: ts.ScriptTarget.ES2020, module: ts.ModuleKind.ESNext })
     } else {
         return ts.transpileModule(code, {
             compilerOptions: {
@@ -46,7 +46,7 @@ function ts2js(code, types) {
                 module: ts.ModuleKind.ESNext,
                 strict: false
             }
-        }).outputText;
+        }).outputText
     }
 }
 
