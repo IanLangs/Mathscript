@@ -30,27 +30,29 @@ async function main() {
         const files = filesInput.split(" ").filter(f => f.trim().length > 0)
 
         // Crear config
-        MS.config = { strict, Files: files }
+        MS.configurate = { strict, Files: files }
 
         // Guardar config en msconfig.json
-        fs.writeFileSync("msconfig.json", JSON.stringify(MS.config, null, 2), 'utf-8')
+        fs.writeFileSync("msconfig.json", JSON.stringify(MS.configurate, null, 2), 'utf-8')
         console.log("Archivo msconfig.json creado!")
         return
     }
 
     // Si no es --init, asumimos que es un archivo de config
-    MS.config = JSON.parse(fs.readFileSync(arg1, 'utf-8'))
+    MS.configurate = JSON.parse(fs.readFileSync(arg1, 'utf-8'))
 
-    const strict = MS.config["strict"]
-    const files = MS.config["Files"]
+    const strict = MS.configurate["strict"]
+    const files = MS.configurate["Files"]
 
     for (const file of files) {
-        const out = file.replace(/\.ms$/, ".js")
+        const outjs = file.replace(/\.ms$/, ".js")
+        const outts = file.replace(/\.ms$/, ".ts")
         let code = fs.readFileSync(file, 'utf-8')
         code = MS.ms2ts(code)
+        fs.writeFileSync(outts, code, 'utf-8')
         code = MS.ts2js(code, strict)
-        fs.writeFileSync(out, code, 'utf-8')
-        console.log(`Transpilado ${file} → ${out}`)
+        fs.writeFileSync(outjs, code, 'utf-8')
+        console.log(`Transpilado ${file} → ${outjs}`)
     }
 }
 

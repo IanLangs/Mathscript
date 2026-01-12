@@ -14,24 +14,31 @@ class regex {
     }
 }
 
-let config = {}
+let configurate = {}
+const constants1 = [
+    new regex(/arr\<(.*?)\>/g, "$1[]"),
+    new regex(/map\s*<([^,]*),\s*([^,]*)>/g, "Record<$1, $2>"),
+]
 
-const constants = [
-    regex(/::/g, ":"),
-    regex(/using\((.*?)\)/g, "requiere($1)"),
-    regex(/\bstr\b/g, "string"),
-    regex(/\bbool\b/g, "boolean"),
-    regex(/\bmap\s*<([^,]*),\s*([^,]*)>\b/g, "Record<$1, $2>"),
-    regex(/\bmap\b/g, "Record<any, any>"),
-    regex(/\bobj\b/g, "object"),
-    regex(/\barr<(.*?)>\b/g, "$1[]"),
-    regex(/\barr\b/g, "any[]"),
-    regex(/\bfn\b/g, "function")
+const constants2 = [
+    new regex(/::/g, ":"),
+    new regex(/using\((.*?)\)/g, "require($1)"),
+    new regex(/\bstr\b/g, "string"),
+    new regex(/\bbool\b/g, "boolean"),
+    new regex(/\bmap\b/g, "Record<any, any>"),
+    new regex(/\bobj\b/g, "object"),
+    new regex(/\barr\b/g, "any[]"),
+    new regex(/\bfn\b/g, "function")
 ]
 
 function ms2ts(code) {
     let result = code
-    for (const r of constants) {
+    for (const r of constants1) {
+        console.log(r)
+        result = r.replace(result)
+    }
+    for (const r of constants2) {
+        console.log(r)
         result = r.replace(result)
     }
     return result
@@ -50,4 +57,4 @@ function ts2js(code, types) {
     }
 }
 
-export default {config, ms2ts, ts2js}
+export default {configurate, ms2ts, ts2js}
