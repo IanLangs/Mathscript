@@ -2,15 +2,14 @@
 
 ## Uso
 
-msc --init
+msc --init &lt;file list&gt;
 
-msc msconfig.json
+msc msconfig.json # o solo msc
 
 ## Configuración
 
-- msc --init -> te pregunta cómo configurar
+- msc --init &lt;file list&gt; -> genera msconfig.json
 - Files -> archivos a traducir
-- strict -> si es true, requiere tipado; si es false, no
 
 ## Sintaxis
 
@@ -30,35 +29,20 @@ require("module")
 function f(x) {
     return x
 }
-```
+``` 
 
-### Tipos
+### variables
 
 ```ms
-a: str = "string"
-b: bool = true
-c: obj = { "x": a, "y": b }
-d: arr<str> = [
-    "string",
-    "list"
-]
+var x1 = value
+let x2 = value
+const x3 = value
+mut x4 = value
+
+//luego
+immut x4
 ```
 
-compila a:
+### tipado
 
-```js
-a = "string"
-b = true
-c = { "x": a, "y": b }
-d = [
-    "string",
-    "list"
-]
-```
-
-### Notas
-
-- Los tipos son solo para el compilador, JS no los interpreta en runtime.  
-- Puedes usar `arr<tipo>` para listas tipadas y `obj<key,value>` para objetos complejos.  
-- Las funciones y módulos se traducen directamente a JS limpio.  
-- `strict: true` fuerza tipado, `strict: false` permite inferencia flexible.  
+el tipado es opcional, y solo es notacion, porque ms es tipado y no compilado
