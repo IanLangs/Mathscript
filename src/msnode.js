@@ -2,6 +2,13 @@
 import fs from 'fs'
 import { transpile } from './transpile.js'
 
+if(process.argv[2] == "-v" || process.argv[2] == "--version") {
+    const url = "https://unpkg.com/@ianlangs/mathscript/package.json"
+    const version = (await fetch(url).then(r => r.json()))["version"]
+    console.log(`MS versión = ${version}`)
+    process.exit(0)
+}
+
 const file = process.argv[2]
 
 if (!file) {
