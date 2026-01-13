@@ -1,13 +1,12 @@
 // Mutable
-let x = (()=>{let v=5; return {get:()=>v,set:n=>v=n}})()
-console.log(x.get()) // 5
-x.set(10)
-console.log(x.get()) // 10
+let x = 5
+console.log(x) // 5
+x = 10
+console.log(x) // 10
 
 // Inmutable
-delete x.set
 try {
-    x.set(20) // debería dar error
+    //x = 20 // debería dar error
 } catch(e) {
     console.log("error mutabilidad") // esperado
 }
@@ -15,7 +14,7 @@ try {
 // Variable
 let y = "hola"
 console.log(y) // "hola"
-// delete y.set // error no es mutable
+// immut y // error no es mutable
 
 
 // Const

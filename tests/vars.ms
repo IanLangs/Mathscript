@@ -1,16 +1,12 @@
 // Mutable
-mut x::number = 5
-console.log(x.get()) // 5
-x.set(10)
-console.log(x.get()) // 10
+mut x = 5
+console.log(x) // 5
+x = 10
+console.log(x) // 10
 
 // Inmutable
 immut x
-try {
-    x.set(20) // debería dar error
-} catch(e) {
-    console.log("error mutabilidad") // esperado
-}
+//x = 20 //  error
 
 // Variable
 let y = "hola"

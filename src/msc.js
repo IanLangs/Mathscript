@@ -11,7 +11,7 @@ function init(files) {
 function transpileFiles(files) {
     for (const file of files) {
         const code = fs.readFileSync(file, 'utf-8')
-        const out = transpile(code)
+        const out = transpile(code, file)
         fs.writeFileSync(file.replace(/\.ms$/, '.js'), out)
         console.log(`✔ ${file}`)
     }

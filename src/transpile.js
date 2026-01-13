@@ -1,11 +1,18 @@
-export function transpile(code) {
+export function transpile(code, filename = "<input>") {
+    code = code.replace("using(", "require(").replace(/::?[^=\n\(\)]*/g, "").replace(/\bfn\b/g, "function")
     const lines = code.split('\n')
     const vars = new Map()
     const output = []
 
+    function error(line, msg) {
+        console.error(`\n[MS ERROR] ${filename}:${line}\n  ${msg}\n`)
+        process.exit(1)
+    }
+
     for (let i = 0; i < lines.length; i++) {
         const raw = lines[i]
         const line = raw.trim()
+        const ln = i + 1
 
         if (!line) {
             output.push(raw)
@@ -19,7 +26,7 @@ export function transpile(code) {
             const value = m[2]
 
             if (vars.has(name)) {
-                throw new Error(`L${i+1}: '${name}' ya está declarada`)
+                error(ln, `'${name}' ya está declarada`)
             }
 
             vars.set(name, { mutable: true })
@@ -33,12 +40,12 @@ export function transpile(code) {
             const name = m[1]
 
             if (!vars.has(name)) {
-                throw new Error(`L${i+1}: '${name}' no está declarada`)
+                error(ln, `'${name}' no está declarada`)
             }
 
             const info = vars.get(name)
             if (!info.mutable) {
-                throw new Error(`L${i+1}: '${name}' no es mutable`)
+                error(ln, `'${name}' no es mutable`)
             }
 
             info.mutable = false
@@ -49,12 +56,14 @@ export function transpile(code) {
         m = line.match(/^([a-zA-Z_]\w*)\s*=\s*(.+)$/)
         if (m) {
             const name = m[1]
+
             if (vars.has(name)) {
                 const info = vars.get(name)
                 if (!info.mutable) {
-                    throw new Error(`L${i+1}: '${name}' es inmutable`)
+                    error(ln, `'${name}' es inmutable`)
                 }
             }
+
             output.push(raw)
             continue
         }

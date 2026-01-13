@@ -10,5 +10,5 @@ if (!file) {
 }
 
 const code = fs.readFileSync(file, 'utf-8')
-const js = transpile(code)
+const js = transpile(code, file)
 eval(js)
