@@ -25,7 +25,8 @@
     "url": "https://github.com/IanLangs/Mathscript/issues"
   },
   "bin": {
-    "msc": "./src/main.js"
+    "msc": "./src/main.js",
+    "ms-node":"./src/node.js"
   },
   "homepage": "https://github.com/IanLangs/Mathscript#readme"
 }
