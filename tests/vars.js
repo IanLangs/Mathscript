@@ -1,5 +1,5 @@
 // Mutable
-let x= (()=>{let v=5; return {get:()=>v,set:n=>v=n}})()
+let x = (()=>{let v=5; return {get:()=>v,set:n=>v=n}})()
 console.log(x.get()) // 5
 x.set(10)
 console.log(x.get()) // 10
@@ -15,7 +15,7 @@ try {
 // Variable
 let y = "hola"
 console.log(y) // "hola"
-delete y.set // no cambia nada
+// delete y.set // error no es mutable
 
 
 // Const

@@ -15,7 +15,7 @@ try {
 // Variable
 let y = "hola"
 console.log(y) // "hola"
-immut y // no cambia nada
+// immut y // error no es mutable
 
 
 // Const
