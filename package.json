@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "@ianlangs/mathscript",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "superset de js",
   "main": "src/transpile.js",
   "scripts": {
@@ -26,7 +26,7 @@
   "bin": {
     "msc": "./src/msc.js",
     "ms-node": "./src/msnode.js",
-    "mpm":"./mpm/mpm.js"
+    "mpm": "./mpm/mpm.js"
   },
   "homepage": "https://github.com/IanLangs/Mathscript#readme"
 }
