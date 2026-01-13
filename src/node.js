@@ -1,6 +1,15 @@
-#!/bin/env node
-import T from './transpile.js'
-import fs from 'fs'
-const __code__ = fs.readFileSync(process.argv[2], 'utf-8')
+#!/usr/bin/env node
+import fs from "fs"
+import T from "./transpile.js"
 
-eval(T.transpile(__code__, ...(T.Consts)))
+const file = process.argv[2]
+if (!file) {
+  console.error("Usage: ms-node <file.ms>")
+  process.exit(1)
+}
+
+
+const source = fs.readFileSync(file, "utf-8")
+const js = T.transpile(source, ...(T.Consts))
+const run = new Function(js)
+run()
