@@ -2,9 +2,15 @@
 
 ## Uso
 
+### compilar
+
 msc --init &lt;file list&gt;
 
 msc msconfig.json # o solo msc
+
+### ejecutar (un solo archivo)
+
+ms-node main.ms
 
 ## Configuración
 
