@@ -5,7 +5,7 @@ import https from "https"
 import { execSync } from "child_process"
 
 if (process.argv[2] === "-v" || process.argv[2] === "--version") {
-    (async () => {
+    await (async () => {
         const url = "https://unpkg.com/@ianlangs/mathscript/package.json"
         const res = await fetch(url)
         const pkg = await res.json()
