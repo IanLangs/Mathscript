@@ -25,7 +25,8 @@
   },
   "bin": {
     "msc": "./src/msc.js",
-    "ms-node": "./src/msnode.js"
+    "ms-node": "./src/msnode.js",
+    "mpm":"./mpm/mpm.js"
   },
   "homepage": "https://github.com/IanLangs/Mathscript#readme"
 }

@@ -1,5 +1,5 @@
 export function transpile(code, filename = "<input>") {
-    code = code.replace("using(", "require(").replace(/::?[^=\n\(\)]*/g, "").replace(/\bfn\b/g, "function")
+    code = code.replace("using(", "require(").replace(/::[^=\n\(\)]*/g, "").replace(/\bfn\b/g, "function")
     const lines = code.split('\n')
     const vars = new Map()
     const output = []
