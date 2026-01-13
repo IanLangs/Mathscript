@@ -3,9 +3,9 @@
   "name": "@ianlangs/mathscript",
   "version": "1.2.0",
   "description": "superset de js",
-  "main": "src/main.js",
+  "main": "src/transpile.js",
   "scripts": {
-    "test": "node ./src/main.js --init"
+    "test": "node ./src/msc.js --init"
   },
   "repository": {
     "type": "git",
@@ -24,8 +24,8 @@
     "url": "https://github.com/IanLangs/Mathscript/issues"
   },
   "bin": {
-    "msc": "./src/main.js",
-    "ms-node": "./src/node.js"
+    "msc": "./src/msc.js",
+    "ms-node": "./src/msnode.js"
   },
   "homepage": "https://github.com/IanLangs/Mathscript#readme"
 }
