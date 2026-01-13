@@ -4,6 +4,16 @@ import path from "path"
 import https from "https"
 import { execSync } from "child_process"
 
+if (process.argv[2] === "-v" || process.argv[2] === "--version") {
+    (async () => {
+        const url = "https://unpkg.com/@ianlangs/mathscript/package.json"
+        const res = await fetch(url)
+        const pkg = await res.json()
+        console.log(`MS versión = ${pkg.version}`)
+        process.exit(0)
+    })()
+}
+
 const args = process.argv.slice(2)
 const CWD = process.cwd()
 const MODULES_DIR = path.join(CWD, "ms_modules")
