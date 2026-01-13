@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "@ianlangs/mathscript",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "superset de js",
   "main": "src/main.js",
   "scripts": {
