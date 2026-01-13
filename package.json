@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "@ianlangs/mathscript",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "superset de js",
   "main": "src/main.js",
   "scripts": {
@@ -20,13 +20,12 @@
   ],
   "author": "ianlangs",
   "license": "MIT",
-  
   "bugs": {
     "url": "https://github.com/IanLangs/Mathscript/issues"
   },
   "bin": {
     "msc": "./src/main.js",
-    "ms-node":"./src/node.js"
+    "ms-node": "./src/node.js"
   },
   "homepage": "https://github.com/IanLangs/Mathscript#readme"
 }
