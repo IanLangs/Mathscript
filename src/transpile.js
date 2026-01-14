@@ -1,7 +1,11 @@
 export function transpile(code, filename = "<input>") {
-    code = code.replace("using(", "require(").replace(/::[^=\n\(\)]*/g, "").replace(/\bfn\b/g, "function")
+    // reemplazos básicos
+    code = code.replace("using(", "require(")
+               .replace(/::[^=\n\(\)]*/g, "")
+               .replace(/\bfn\b/g, "function")
+
     const lines = code.split('\n')
-    const vars = new Map()
+    const vars = new Map() // mapa de variables y su tipo: {mutable: true, isMut: true/false}
     const output = []
 
     function error(line, msg) {
@@ -20,17 +24,26 @@ export function transpile(code, filename = "<input>") {
         }
 
         // mut x = value
-        let m = line.match(/^mut\s+([a-zA-Z_]\w*)\s*=\s*(.+)$/)
+        let m = line.match(/^(mut|let|const)\s+([a-zA-Z_]\w*)\s*=\s*(.+)$/)
         if (m) {
-            const name = m[1]
-            const value = m[2]
+            const kind = m[1] // mut / let / const
+            const name = m[2]
+            const value = m[3]
 
             if (vars.has(name)) {
                 error(ln, `'${name}' ya está declarada`)
             }
 
-            vars.set(name, { mutable: true })
-            output.push(`let ${name} = ${value}`)
+            if (kind === "mut") {
+                vars.set(name, { mutable: true, isMut: true })
+                output.push(`let ${name} = ${value}`)
+            } else if (kind === "let") {
+                vars.set(name, { mutable: true, isMut: false })
+                output.push(raw)
+            } else { // const
+                vars.set(name, { mutable: false, isMut: false })
+                output.push(raw)
+            }
             continue
         }
 
@@ -44,15 +57,17 @@ export function transpile(code, filename = "<input>") {
             }
 
             const info = vars.get(name)
-            if (!info.mutable) {
-                error(ln, `'${name}' no es mutable`)
+            if (!info.isMut) {
+                error(ln, `'${name}' no es mutable (solo variables declaradas con mut pueden ser inmutables)`)
             }
 
+            // hacerla inmutable
             info.mutable = false
+            output.push(`// ${name} ahora es inmutable`)
             continue
         }
 
-        // x = y
+        // asignaciones normales
         m = line.match(/^([a-zA-Z_]\w*)\s*=\s*(.+)$/)
         if (m) {
             const name = m[1]
@@ -64,22 +79,6 @@ export function transpile(code, filename = "<input>") {
                 }
             }
 
-            output.push(raw)
-            continue
-        }
-
-        // let x =
-        m = line.match(/^let\s+([a-zA-Z_]\w*)\s*=/)
-        if (m) {
-            vars.set(m[1], { mutable: true })
-            output.push(raw)
-            continue
-        }
-
-        // const x =
-        m = line.match(/^const\s+([a-zA-Z_]\w*)\s*=/)
-        if (m) {
-            vars.set(m[1], { mutable: false })
             output.push(raw)
             continue
         }

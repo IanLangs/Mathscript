@@ -11,7 +11,7 @@ immut x
 // Variable
 let y = "hola"
 console.log(y) // "hola"
-// immut y // error no es mutable
+immut y // error no es mutable
 
 
 // Const
