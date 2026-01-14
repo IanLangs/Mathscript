@@ -4,7 +4,7 @@ fn suma(a, b) {
 
 console.log(suma(3, 4)) // 7
 
-fn saludo(nombre::string) {
+fn saludo(nombre) {
     return "Hola " + nombre
 }
 
