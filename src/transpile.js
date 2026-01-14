@@ -1,92 +1,84 @@
+// transpile.js
 export function transpile(code, filename = "<input>") {
-    // reemplazos básicos
-    code = code.replace("using(", "require(")
-               .replace(/::[^=\n\(\)]*/g, "")
-               .replace(/\bfn\b/g, "function")
-
-    const lines = code.split('\n')
-    const vars = new Map() // mapa de variables y su tipo: {mutable: true, isMut: true/false}
-    const output = []
+    const lines = code.split('\n');
+    const vars = new Map();
+    const output = [];
 
     function error(line, msg) {
-        console.error(`\n[MS ERROR] ${filename}:${line}\n  ${msg}\n`)
-        process.exit(1)
+        console.error(`\n[MS ERROR] ${filename}:${line}\n  ${msg}\n`);
+        process.exit(1);
     }
 
     for (let i = 0; i < lines.length; i++) {
-        const raw = lines[i]
-        const line = raw.trim()
-        const ln = i + 1
+        const raw = lines[i];
+        const line = raw.trim();
+        const ln = i + 1;
 
         if (!line) {
-            output.push(raw)
-            continue
+            output.push(raw);
+            continue;
         }
 
-        // mut x = value
-        let m = line.match(/^(mut|let|const)\s+([a-zA-Z_]\w*)\s*=\s*(.+)$/)
+        // let x = value
+        let m = line.match(/^let\s+([a-zA-Z_]\w*)\s*=\s*(.+)$/);
         if (m) {
-            const kind = m[1] // mut / let / const
-            const name = m[2]
-            const value = m[3]
+            const name = m[1];
+            const value = m[2];
 
             if (vars.has(name)) {
-                error(ln, `'${name}' ya está declarada`)
+                error(ln, `'${name}' ya está declarada`);
             }
 
-            if (kind === "mut") {
-                vars.set(name, { mutable: true, isMut: true })
-                output.push(`let ${name} = ${value}`)
-            } else if (kind === "let") {
-                vars.set(name, { mutable: true, isMut: false })
-                output.push(raw)
-            } else { // const
-                vars.set(name, { mutable: false, isMut: false })
-                output.push(raw)
-            }
-            continue
+            vars.set(name, { mutable: true });
+            output.push(raw);
+            continue;
         }
 
         // immut x
-        m = line.match(/^immut\s+([a-zA-Z_]\w*)$/)
+        m = line.match(/^immut\s+([a-zA-Z_]\w*)$/);
         if (m) {
-            const name = m[1]
+            const name = m[1];
 
             if (!vars.has(name)) {
-                error(ln, `'${name}' no está declarada`)
+                error(ln, `'${name}' no está declarada`);
             }
 
-            const info = vars.get(name)
-            if (!info.isMut) {
-                error(ln, `'${name}' no es mutable (solo variables declaradas con mut pueden ser inmutables)`)
+            const info = vars.get(name);
+            if (!info.mutable) {
+                error(ln, `'${name}' no es mutable`);
             }
 
-            // hacerla inmutable
-            info.mutable = false
-            output.push(`// ${name} ahora es inmutable`)
-            continue
+            info.mutable = false;
+            continue;
         }
 
-        // asignaciones normales
-        m = line.match(/^([a-zA-Z_]\w*)\s*=\s*(.+)$/)
+        // x = y
+        m = line.match(/^([a-zA-Z_]\w*)\s*=\s*(.+)$/);
         if (m) {
-            const name = m[1]
-
+            const name = m[1];
             if (vars.has(name)) {
-                const info = vars.get(name)
+                const info = vars.get(name);
                 if (!info.mutable) {
-                    error(ln, `'${name}' es inmutable`)
+                    error(ln, `'${name}' es inmutable`);
                 }
             }
-
-            output.push(raw)
-            continue
+            output.push(raw);
+            continue;
         }
 
-        output.push(raw)
+        // const x = ...
+        m = line.match(/^const\s+([a-zA-Z_]\w*)\s*=/);
+        if (m) {
+            vars.set(m[1], { mutable: false });
+            output.push(raw);
+            continue;
+        }
+
+        // fn -> function
+        output.push(line.replace(/\bfn\b/g, "function"));
     }
 
-    return output.join('\n')
+    return output.join('\n');
 }
 
-export default { transpile }
+export default { transpile };

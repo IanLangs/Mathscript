@@ -43,12 +43,7 @@ function f(x) {
 var x1 = value
 let x2 = value
 const x3 = value
-mut x4 = value
 
-//luego
-immut x4
+//luego, solo con let
+immut x2
 ```
-
-### tipado
-
-el tipado es opcional, y solo es notacion, porque ms es tipado y no compilado
