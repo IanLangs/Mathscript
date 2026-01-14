@@ -1,0 +1,59 @@
+// ----------------------------
+// MSfs - estilo open de Python
+// ----------------------------
+import fs from 'fs/promises'
+
+class File {
+  constructor(path, mode = 'r', encoding = 'utf-8') {
+    this.path = path
+    this.mode = mode
+    this.encoding = encoding
+    this.closed = false
+  }
+
+  async open() {
+    if (this.mode.includes('r')) {
+      this.content = await fs.readFile(this.path, this.encoding)
+    } else if (this.mode.includes('w')) {
+      this.content = ''
+      await fs.writeFile(this.path, '', this.encoding)
+    } else if (this.mode.includes('a')) {
+      try {
+        this.content = await fs.readFile(this.path, this.encoding)
+      } catch {
+        this.content = ''
+      }
+    }
+    return this
+  }
+
+  read() {
+    if (this.closed) throw new Error('File is closed')
+    return this.content
+  }
+
+  write(text) {
+    if (this.closed) throw new Error('File is closed')
+    if (this.mode.includes('r')) throw new Error('File not open for writing')
+    this.content += text
+  }
+
+  async writetofile() {
+    if (this.closed) throw new Error('File is closed')
+    if (!this.mode.includes('r')) await fs.writeFile(this.path, this.content, this.encoding)
+  }
+
+  async close() {
+    await this.writetofile()
+    this.closed = true
+  }
+}
+
+const MSfs = {
+  open(path, mode = 'r', encoding = 'utf-8') {
+    const f = new File(path, mode, encoding)
+    return f.open()
+  }
+}
+
+export default MSfs

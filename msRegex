@@ -1,0 +1,52 @@
+// ----------------------------
+// MSregex - Regex estilo Python
+// ----------------------------
+
+class RE {
+  constructor(pattern, flags = '') {
+    if (pattern instanceof RegExp) {
+      this.regex = pattern
+    } else {
+      this.regex = new RegExp(pattern, flags)
+    }
+  }
+
+  // Devuelve el primer match como string o null
+  search(text) {
+    const m = this.regex.exec(text)
+    return m ? m[0] : null
+  }
+
+  // Devuelve array de todos los matches
+  match(text) {
+    if (!this.regex.global) {
+      // Si no es global, hacemos match único
+      const m = text.match(this.regex)
+      return m ? m : []
+    } else {
+      return [...text.matchAll(this.regex)].map(x => x[0])
+    }
+  }
+
+  // Reemplaza ocurrencias por replacement
+  sub(text, replacement) {
+    return text.replace(this.regex, replacement)
+  }
+
+  // Devuelve boolean si hay match
+  test(text) {
+    return this.regex.test(text)
+  }
+
+  // Para compatibilidad, permite convertir a string
+  toString() {
+    return this.regex.toString()
+  }
+}
+
+// Export simple
+const MSregex = {
+  RE
+}
+
+export default MSregex
