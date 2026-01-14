@@ -74,8 +74,8 @@ export function transpile(code, filename = "<input>") {
             continue;
         }
 
-        // fn -> function
-        output.push(line.replace(/\bfn\b/g, "function"));
+        // fn -> function, usin -> require
+        output.push(line.replace(/\bfn\b/g, "function").replace("using(", "require("));
     }
 
     return output.join('\n');
