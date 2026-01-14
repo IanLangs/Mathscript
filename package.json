@@ -28,5 +28,8 @@
     "ms-node": "./src/msnode.js",
     "mpm": "./mpm/mpm.js"
   },
-  "homepage": "https://github.com/IanLangs/Mathscript#readme"
+  "homepage": "https://github.com/IanLangs/Mathscript#readme",
+  "dependencies": {
+    "mslibs": "^1.0.1"
+  }
 }
